@@ -1,0 +1,203 @@
+
+<html>
+
+<head>
+<meta charset="utf-8">
+<base href="<%=basePath%>">
+
+<link rel="stylesheet" href="css/checkNum.css" />
+<link rel="stylesheet" href="css/fileinput.min.css" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/default.css" />
+<script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="js/fileinput.min.js"></script>
+<script type="text/javascript" src="js/zh.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-form.js"></script>
+<title>My JSP 'index.jsp' starting page</title>
+<script type="text/javascript">
+	//ajax 方式上传文件操作  
+	$(document)
+			.ready(
+					function() {
+						$('#btn')
+								.click(
+										function() {
+											if (checkData()) {
+												$('#form1')
+														.ajaxSubmit(
+																{
+																	url : 'http://localhost:8080/learning/prize/insertPrizes.action',
+																	dataType : 'text',
+																	success : resutlMsg,
+																	error : errorMsg
+																});
+
+												function resutlMsg(msg) {
+													alert(msg);
+													$("#upfile").val("");
+												}
+
+												function errorMsg() {
+													alert("导入excel出错！");
+												}
+											}
+										});
+					});
+
+	//JS校验form表单信息  
+	function checkData() {
+		var fileDir = $("#upfile").val();
+		var suffix = fileDir.substr(fileDir.lastIndexOf("."));
+		if ("" == fileDir) {
+			alert("选择需要导入的Excel文件！");
+			return false;
+		}
+		if (".xls" != suffix && ".xlsx" != suffix) {
+			alert("选择Excel格式的文件导入！");
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+
+<body>
+	 <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://192.168.191.1:8080/luckysystem1/">抽奖管理系统</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="http://192.168.191.1:8080/luckysystem1/raffle.html">开始抽奖
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li><a href="http://192.168.191.1:8080/luckysystem1/checkNum.html">检查号码</a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">奖品数据管理 <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/IOPrizeData.html">数据导入</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/outExcell.action">数据导出</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/findAllPrizes.action">奖品列表</a>
+							</li>
+						</ul></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="查找奖品">
+					</div>
+					<button type="submit" class="btn btn-default">查找</button>
+				</form>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+		</nav>
+	<div class="container">
+		<div class="row">
+		<div class="col-xs-12 page-header">
+			<div>
+				<h1 class="text-center">奖品数据导入导出</h1>
+			</div>
+
+		</div>
+		</div>
+		
+		<div class="row">
+
+			<div class="col-md-6 col-xs-12 fileControl">
+				<form method="POST" enctype="multipart/form-data" id="form1"
+					action="uploadExcel/upload.do">
+					<div class="form-group center-block">
+						<label style="font-size: 30px;">导入Excel数据</label> <input
+							id="upfile" type="file" multiple=true name="upfile ">
+					</div>
+
+
+				</form>
+			</div>
+			<div class="row marginfile">
+				<div class="col-xs-6 ">
+					<button id="btn" name="btn"
+						class="center-block uploadBtn container-fluid button-pill button-royal">导入数据</button>
+				</div>
+				<div class=" col-xs-6 ">
+					<button id="output"
+						class="center-block outputBtn container-fluid button-pill button-royal"
+						onclick="javascript:window.location.href='prize/outExcell.action'">导出数据</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	</br>
+	<!--<div>
+		<form method="POST" enctype="multipart/form-data" id="form1" action="uploadExcel/upload.do">
+			<table>
+				<tr>
+					<td>上传文件: </td>
+					<td> <input id="upfile" type="file" name="upfile"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="提交" onclick="return checkData()"></td>
+					<td><input type="button" value="ajax方式提交" id="btn" name="btn"></td>
+					<td>
+						<a href="prize/outExcell.action" class="btn btn-success">导出excell表格</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>-->
+
+
+
+
+</body>
+<script>
+	$("#upfile").fileinput({
+		showUpload : false,
+		showCaption : false,
+		browseClass : "btn btn-primary btn-lg",
+		fileType : "any",
+		previewFileIcon : "<i class='glyphicon glyphicon-king'></i>"
+	});
+
+	$(document).ready(function() {
+		$("#test-upload").fileinput({
+			'showPreview' : false,
+			'allowedFileExtensions' : [ 'jpg', 'png', 'gif' ],
+			'elErrorContainer' : '#errorBlock'
+		});
+		/*
+		$("#test-upload").on('fileloaded', function(event, file, previewId, index) {
+		    alert('i = ' + index + ', id = ' + previewId + ', file = ' + file.name);
+		});
+		 */
+	});
+</script>
+
+</html>

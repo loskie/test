@@ -1,0 +1,71 @@
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		
+		body {
+			background: url(../images/body_bg.jpg) 0px 0px repeat-x #000;
+		}
+		
+		.main_bg {
+			background: url(../images/main_bg.jpg) top center no-repeat;
+			height: 1000px;
+		}
+		
+		.main {
+			width: 600px;
+			height: 500px;
+			position: relative;
+			margin: 0 auto;
+		}
+		/*.num_mask {
+				background: url(../images/num_mask.png) 0px 0px no-repeat;
+				height: 884px;
+				width: 740px;
+				position: absolute;
+				left: 50%;
+				top: 390px;
+				margin-left: -370px;
+				z-index: 9;
+			}*/
+		
+		.num_box {
+			height: 450px;
+			width: 750px;
+			position: absolute;
+			left: 50%;
+			top: 340px;
+			margin-left: -370px;
+			z-index: 8;
+			overflow: hidden;
+			text-align: center;
+		}
+		
+		.num {
+			background: url(../images/num.png) top center repeat-y;
+			width: 181px;
+			height: 265px;
+			float: left;
+			margin-right: 6px;
+		}
+		
+		.btn {
+			background: url(../images/btn_start.png) 0px 0px no-repeat;
+			width: 264px;
+			height: 89px;
+			position: absolute;
+			left: 50%;
+			bottom: 50px;
+			margin-left: -132px;
+			cursor: pointer;
+			clear: both;
+		}
+		
+		.selectGrade {
+			font-size: 25px;
+			color: #F0F0F0;
+			margin-top: 250px;
+			margin-left: 90px;
+			
+		}

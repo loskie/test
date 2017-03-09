@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.som.dao.IPrizeDao">
+   <resultMap type="Prize" id="prizeMap">
+		<id property="id" column="id"/>
+		<result property="grade" column="grade"/>
+		<result property="sponsor" column="sponsor"/>
+		<result property="productname" column="productname"/>
+		<result property="unitprice" column="unitprice"/>
+		<result property="count" column="count"/>
+		<result property="totalvalue" column="totalvalue"/>	
+	</resultMap>
+	
+	
+	<select id="findById" parameterType="int" resultType="Prize">
+		select * from prizes where id=#{id}
+	</select>
+	
+	<select id="findByGrade" parameterType="String" resultType="Prize">
+		select * from prizes where grade=#{grade} order by id desc
+	</select>
+	
+	<select id="findAll" resultType="Prize">
+		select * from prizes order by id asc
+	</select>
+	
+	<insert id="add" parameterType="Prize">
+		insert into prizes (grade,sponsor,productname,unitprice,count,totalvalue) values (#{grade},#{sponsor},#{productname},#{unitprice},#{count},#{totalvalue})
+	</insert>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from prizes where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="Prize">
+		update prizes set grade=#{grade},sponsor=#{sponsor},productname=#{productname},unitprice=#{unitprice},count=#{count},totalvalue=#{totalvalue} where id=#{id}
+	</update>
+	
+	
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.som.dao.IExRecordDao">
+   <resultMap type="ExRecord" id="exRecordMap">
+		<id property="id" column="id"/>
+		<result property="exdate" column="exdate"/>
+		<result property="exnum" column="exnum"/>
+		<result property="exproduct" column="exproduct"/>
+		
+	</resultMap>
+	
+	
+	<insert id="add" parameterType="ExRecord">
+		insert into exrecord (exdate,exnum,exproduct) values
+		(#{exdate},#{exnum},#{exproduct})
+	</insert>
+	
+	<select id="findByExnum" resultType="ExRecord">
+		select * from exrecord where exnum=#{exnum}
+	</select>
+	
+	
+</mapper>

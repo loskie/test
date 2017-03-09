@@ -1,0 +1,110 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+	<head>
+	
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>检查页面</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/checkNum.css" />
+		<script src="js/jquery-2.1.1.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+
+	</head>
+
+	<body>
+		<!--
+        	作者：1056824931@qq.com
+        	时间：2016-09-10
+        	描述：顶头导航
+        -->
+
+		<!--
+        	作者：1056824931@qq.com
+        	时间：2016-09-10
+        	描述：页面轮播
+        -->
+        <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://192.168.191.1:8080/luckysystem1/">抽奖管理系统</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="http://192.168.191.1:8080/luckysystem1/raffle.html">开始抽奖
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li><a href="http://192.168.191.1:8080/luckysystem1/checkNum.html">检查号码</a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">奖品数据管理 <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/IOPrizeData.html">数据导入</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/outExcell.action">数据导出</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/findAllPrizes.action">奖品列表</a>
+							</li>
+						</ul></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="查找奖品">
+					</div>
+					<button type="submit" class="btn btn-default">查找</button>
+				</form>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+		</nav>
+		<div class="container">
+
+			<div class="page-header">
+				<div>
+					<h1 class="text-center">检查中奖页面</h1>
+				</div>
+
+			</div>
+			<div class="row">
+				
+					<form action="luckNum/checkNum.action" method="post">
+					<div class="col-md-6 col-xs-12">
+						<input id="num" name="inputNum" type="text" class="center-block numText container-fluid" placeholder="请输入要查询的号码" />
+
+					</div>
+					<div class="col-md-6 col-xs-12">
+						<button id="check" type="submit" class=" center-block checkBtn container-fluid button-pill button-royal" >检查</button>
+					</div>
+					</form>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>

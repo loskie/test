@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>抽奖机器</title>
+		<script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/easing.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="css/lucky.css" />
+	</head>
+
+	<body>
+	 <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://192.168.191.1:8080/luckysystem1/">抽奖管理系统</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="http://192.168.191.1:8080/luckysystem1/raffle.html">开始抽奖
+							<span class="sr-only">(current)</span>
+					</a></li>
+					<li><a href="http://192.168.191.1:8080/luckysystem1/checkNum.html">检查号码</a>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">奖品数据管理 <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/IOPrizeData.html">数据导入</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/outExcell.action">数据导出</a>
+							</li>
+							<li role="separator" class="divider"></li>
+							<li><a
+								href="http://192.168.191.1:8080/luckysystem1/prize/findAllPrizes.action">奖品列表</a>
+							</li>
+						</ul></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="查找奖品">
+					</div>
+					<button type="submit" class="btn btn-default">查找</button>
+				</form>
+
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+		</nav>
+		<div class="main_bg">
+			<div class="main">
+				<div  style="text-align:center;color:#fff;padding-top:15px;"></div>
+				
+				<div class="selectGrade">
+					<input type="radio" name="radiobutton" value="一等奖" checked/> 一等奖
+					<input type="radio" name="radiobutton" value="二等奖"/> 二等奖
+					<input type="radio" name="radiobutton" value="三等奖"/> 三等奖
+					<input type="radio" name="radiobutton" value="四等奖"/> 四等奖<br/>
+				</div>
+				<div class="num_mask"></div>
+				<div class="num_box">
+					<div class="num"></div>
+					<div class="num"></div>
+					<div class="num"></div>
+					<div class="num"></div>
+					<div class="btn"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script>
+	//生成随机数函数
+	function numRand(number) {
+		var rand = Math.floor(Math.random()*number);
+		return rand;
+	}
+	//控制动画函数
+	function controlAnimation(temp){
+		var u =265;
+		var num_arr = (temp + '').split('');//将随机数分割成个位数的数组
+				$(".num").each(function(index) {
+				var _num = $(this);
+				setTimeout(function() {
+					_num.animate({
+						backgroundPositionY: (u * 60) - (u * num_arr[index])
+					}, {
+						duration: 500 + index * 300,//调整动画的速度
+						easing: "easeInOutCirc",	//动画的效果
+						complete: function() {		//回调函数
+							if(index == 2) isBegin = false;
+						}
+					});
+				}, index * 300);
+			});
+	}
+	
+	function ajaxRequest(luckNum,grade){
+		$.ajax({
+			type:"post",
+			url:"http://192.168.191.1:8080/luckysystem1/luckNum/ajax.action",
+			data:{
+				"num":luckNum,
+				"type":grade,
+				"date":"20170226"
+			},
+			async:true,
+			success:function(){
+				//alert("success");
+				
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				 alert(XMLHttpRequest.status);
+				 alert(XMLHttpRequest.readyState);
+				 alert(textStatus);
+				   }
+			
+			
+		});
+	}
+	
+	var isBegin = false;
+	$(function() {
+		//var u = 265;
+		$('.btn').click(function() {
+			
+			if(isBegin) return false;
+			isBegin = true;
+			$(".num").css('backgroundPositionY', 0);
+			var result = numRand(4000);
+			var grade=$("input[name='radiobutton']:checked").val();
+			ajaxRequest(result,grade);
+			$('#res').text('摇奖结果 = ' + result);
+			if(result<10){
+				var temp ="000"+result;
+				controlAnimation(temp);
+			}
+			else if(9<result&&result<100){
+				var temp ="00"+result;
+				controlAnimation(temp);
+			}
+			else if(99<result&&result<1000){
+				var temp="0"+result;
+				controlAnimation(temp);
+			}
+			else if(result>999){
+				$('#res').text('摇奖结果 = ' + result + grade);
+				controlAnimation(result);
+			}
+			
+			
+			
+			
+		});
+	});
+</script>
